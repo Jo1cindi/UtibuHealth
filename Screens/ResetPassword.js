@@ -1,11 +1,10 @@
-import React, { useRef } from "react";
+import { View, Text, Image, TouchableOpacity, TextInput } from "react-native";
+import React from "react";
 import OnboardingStyles from "../Styles/OnboardingStyles";
-import { View, Image, Text, TextInput, TouchableOpacity, Linking } from "react-native";
-import { Controller, useForm } from "react-hook-form";
 import { useFonts } from "expo-font";
-import PhoneInput from "react-native-phone-number-input";
+import { Controller, useForm } from "react-hook-form";
 
-const CreateAccount = ({navigation}) => {
+const ResetPassword = () => {
   //Form Controllers
   const {
     control,
@@ -19,14 +18,9 @@ const CreateAccount = ({navigation}) => {
     DidactGothic: require("../assets/fonts/DidactGothic-Regular.ttf"),
   });
 
-  //Phone
-  const phoneInput = useRef();
-
-
-
   if (fontLoaded) {
     return (
-      <View style={OnboardingStyles.createAccount}>
+      <View style={OnboardingStyles.resetPassword}>
         <View style={OnboardingStyles.createAccountHeader}>
           <View style={OnboardingStyles.logoCircle}>
             <Image
@@ -35,63 +29,13 @@ const CreateAccount = ({navigation}) => {
             />
           </View>
         </View>
-
-        {/* Create Account Form */}
-        <View style={OnboardingStyles.createAccountForm}>
-          <Text
-            style={[
-              { fontFamily: "Arimo" },
-              OnboardingStyles.createAccountTitle,
-            ]}
-          >
-            Create Your Account
+        {/* Login Form */}
+        <View style={OnboardingStyles.loginForm}>
+          <Text style={[{ fontFamily: "Arimo" }, OnboardingStyles.createAccountTitle]}>
+            Reset Your Password
           </Text>
 
-          {/* First Name */}
-          <View style={OnboardingStyles.signupForm}>
-            <Controller
-              control={control}
-              render={({ field }) => (
-                <TextInput
-                  {...field}
-                  style={[
-                    { fontFamily: "DidactGothic" },
-                    OnboardingStyles.inputField,
-                  ]}
-                  placeholder="First Name"
-                  selectionColor={"black"}
-                />
-              )}
-              name="name"
-              rules={{ required: "You must enter your name" }}
-            />
-
-            {errors.name && (
-              <Text style={styles.errorText}>{errors.name.message}</Text>
-            )}
-
-            {/* Last Name */}
-            <Controller
-              control={control}
-              render={({ field }) => (
-                <TextInput
-                  {...field}
-                  style={[
-                    { fontFamily: "DidactGothic" },
-                    OnboardingStyles.inputField,
-                  ]}
-                  placeholder="Last Name"
-                  selectionColor={"black"}
-                />
-              )}
-              name="name"
-              rules={{ required: "You must enter your name" }}
-            />
-
-            {errors.name && (
-              <Text style={styles.errorText}>{errors.name.message}</Text>
-            )}
-
+          <View style={OnboardingStyles.signinForm}>
             {/* Email */}
             <Controller
               control={control}
@@ -119,24 +63,6 @@ const CreateAccount = ({navigation}) => {
               <Text style={styles.errorText}>{errors.email.message}</Text>
             )}
 
-            {/* Phone Number */}
-            <PhoneInput
-              ref={phoneInput}
-              defaultValue=""
-              defaultCode="KE"
-              // onChangeFormattedText={(text) => {
-              //   setValue(text);
-              // }}
-              containerStyle={OnboardingStyles.phoneInput}
-              textContainerStyle={OnboardingStyles.phoneInputField}
-              textInputStyle={[
-                { fontFamily: "DidactGothic" },
-                OnboardingStyles.phoneTextInput,
-              ]}
-              flagButtonStyle={OnboardingStyles.flagButton}
-              codeTextStyle={OnboardingStyles.code}
-            />
-
             {/* Password */}
             <Controller
               control={control}
@@ -147,7 +73,7 @@ const CreateAccount = ({navigation}) => {
                     { fontFamily: "DidactGothic" },
                     OnboardingStyles.inputField,
                   ]}
-                  placeholder="Password"
+                  placeholder="New Password"
                   selectionColor={"black"}
                   secureTextEntry={true}
                 />
@@ -165,6 +91,7 @@ const CreateAccount = ({navigation}) => {
               <Text style={styles.errorText}>{errors.password.message}</Text>
             )}
 
+            {/* Password */}
             <Controller
               control={control}
               render={({ field }) => (
@@ -179,7 +106,7 @@ const CreateAccount = ({navigation}) => {
                   secureTextEntry={true}
                 />
               )}
-              name="confirmpassword"
+              name="password"
               rules={{
                 required: "You must enter your name",
                 pattern: {
@@ -189,9 +116,7 @@ const CreateAccount = ({navigation}) => {
               }}
             />
             {errors.email && (
-              <Text style={styles.errorText}>
-                {errors.confirmpassword.message}
-              </Text>
+              <Text style={styles.errorText}>{errors.password.message}</Text>
             )}
 
             {/* Button */}
@@ -199,20 +124,18 @@ const CreateAccount = ({navigation}) => {
               <Text
                 style={[
                   { fontFamily: "Arimo" },
-                  OnboardingStyles.signupBtnText,
+                  OnboardingStyles.signinBtnText,
                 ]}
               >
-                Create Your Account
+                Reset Password
               </Text>
             </TouchableOpacity>
-            <View style={OnboardingStyles.alreadyHaveAccount}>
-             <Text style={[{fontFamily: 'DidactGothic'}, OnboardingStyles.alreadyText]}>Already have an account?</Text>
-             <Text style={[{fontFamily: 'DidactGothic'}, OnboardingStyles.loginLink]} onPress={() => navigation.navigate('Login')}>Log in</Text>
-          </View>
+            
           </View>
         </View>
       </View>
     );
   }
 };
-export default CreateAccount;
+
+export default ResetPassword;
