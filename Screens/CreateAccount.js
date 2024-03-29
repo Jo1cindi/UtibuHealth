@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import OnboardingStyles from "../Styles/OnboardingStyles";
-import { View, Image, Text, TextInput, TouchableOpacity, Linking } from "react-native";
+import { View, Image, Text, TextInput, TouchableOpacity, StatusBar} from "react-native";
 import { Controller, useForm } from "react-hook-form";
 import { useFonts } from "expo-font";
 import PhoneInput from "react-native-phone-number-input";
@@ -27,6 +27,7 @@ const CreateAccount = ({navigation}) => {
   if (fontLoaded) {
     return (
       <View style={OnboardingStyles.createAccount}>
+       <StatusBar  barStyle="light-content"/>
         <View style={OnboardingStyles.createAccountHeader}>
           <View style={OnboardingStyles.logoCircle}>
             <Image
@@ -195,7 +196,7 @@ const CreateAccount = ({navigation}) => {
             )}
 
             {/* Button */}
-            <TouchableOpacity style={OnboardingStyles.signupBtn}>
+            <TouchableOpacity style={OnboardingStyles.signupBtn} onPress={()=> navigation.navigate('AccountVerification')}>
               <Text
                 style={[
                   { fontFamily: "Arimo" },

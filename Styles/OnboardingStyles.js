@@ -232,6 +232,65 @@ const OnboardingStyles = StyleSheet.create({
   resetpwLink: {
     color: green,
     fontWeight: "bold",
+  },
+  resetPassword : {
+    width: width,
+    height: height,
+    backgroundColor: white,
+    flex: 1,
+    flexDirection: 'column'
+  },
+  // Account Verification
+  accountVerification:{
+   width: width,
+   height: height,
+   backgroundColor: white
+  },
+  illustration : {
+    width: '100%',
+    height: 300,
+    display: 'flex',
+    alignItems: 'center'
+  },
+  illustrationImage:{
+    width: 300,
+    height: 300,
+    resizeMode: 'contain'
+  },
+  verificationForm:{
+    width: width,
+    height: 400,
+    display: 'flex',
+    alignItems: 'center'
+  },
+  verificationInput:{
+    height: 50,
+    width: '80%',
+    borderColor: "gray",
+    borderWidth: 1,
+    marginBottom: 10,
+    marginTop: 20,
+    padding: 10,
+    borderRadius: 10,
+    fontSize: 14,
+    backgroundColor: "transparent",
+  },
+  verificationButton: {
+    height: 60,
+    width: '80%',
+    borderRadius: 10,
+    fontSize: 14,
+    backgroundColor: red,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  resend:{
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: green,
+    marginTop: 15,
+    fontSize: 16
   }
 });
 
