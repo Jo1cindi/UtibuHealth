@@ -1,16 +1,43 @@
 import { View, Text, Image, TouchableOpacity, TextInput } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import OnboardingStyles from "../Styles/OnboardingStyles";
 import { useFonts } from "expo-font";
-import { Controller, useForm } from "react-hook-form";
 
-const Login = ({navigation}) => {
-  //Form Controllers
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+const Login = ({ navigation }) => {
+  const [loginData, setLoginData] = useState({
+    email: "",
+    password: "",
+  });
+
+  //Login
+  const login = () => {
+    console.log(loginData);
+
+    if (!loginData.email || loginData.password) {
+      Alert.alert("Please fill in all required fields");
+    } else if (emailError !== "") {
+      Alert.alert("Please input a valid email address");
+    }
+  };
+
+  //Email Validation
+  const [emailError, setEmailError] = useState("");
+
+  useEffect(() => {
+    const regex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
+    const isValidEmail = regex.test(customerData.email);
+
+    if (loginData.email && !isValidEmail) {
+      setEmailError("Please input a valid email address");
+    } else {
+      setEmailError("");
+    }
+  }, [loginData.email]);
+
+  //Check for white space
+  const isEmptyOrWhitespace = (str) => {
+    return (str ?? "").trim() === "";
+  };
 
   //Fonts
   let [fontLoaded] = useFonts({
@@ -37,62 +64,41 @@ const Login = ({navigation}) => {
 
           <View style={OnboardingStyles.signinForm}>
             {/* Email */}
-            <Controller
-              control={control}
-              render={({ field }) => (
-                <TextInput
-                  {...field}
-                  style={[
-                    { fontFamily: "DidactGothic" },
-                    OnboardingStyles.inputField,
-                  ]}
-                  placeholder="Email"
-                  selectionColor={"black"}
-                />
-              )}
-              name="email"
-              rules={{
-                required: "You must enter your name",
-                pattern: {
-                  value: /^\S+@\S+$/i,
-                  message: "Enter a valid email address",
-                },
-              }}
+            <TextInput
+              style={[
+                { fontFamily: "DidactGothic" },
+                OnboardingStyles.inputField,
+              ]}
+              placeholder="Email"
+              selectionColor={"black"}
+              value={loginData.email}
+              onChange={(e) =>
+                setLoginData({ ...loginData, email: e.nativeEvent.text })
+              }
             />
-            {errors.email && (
-              <Text style={styles.errorText}>{errors.email.message}</Text>
+            {!isEmptyOrWhitespace(emailError) && (
+              <Text style={OnboardingStyles.errorText}>{emailError}</Text>
             )}
-
             {/* Password */}
-            <Controller
-              control={control}
-              render={({ field }) => (
-                <TextInput
-                  {...field}
-                  style={[
-                    { fontFamily: "DidactGothic" },
-                    OnboardingStyles.inputField,
-                  ]}
-                  placeholder="Password"
-                  selectionColor={"black"}
-                  secureTextEntry={true}
-                />
-              )}
-              name="password"
-              rules={{
-                required: "You must enter your name",
-                pattern: {
-                  value: /^[A-Za-z]\w{7,14}$/,
-                  message: "Use a strong password",
-                },
-              }}
+            <TextInput
+              style={[
+                { fontFamily: "DidactGothic" },
+                OnboardingStyles.inputField,
+              ]}
+              placeholder="Password"
+              selectionColor={"black"}
+              secureTextEntry={true}
+              value={loginData.password}
+              onChange={(e) =>
+                setLoginData({ ...loginData, password: e.nativeEvent.text })
+              }
             />
-            {errors.email && (
-              <Text style={styles.errorText}>{errors.password.message}</Text>
-            )}
 
             {/* Button */}
-            <TouchableOpacity style={OnboardingStyles.signinBtn}>
+            <TouchableOpacity
+              style={OnboardingStyles.signinBtn}
+              onPress={login}
+            >
               <Text
                 style={[
                   { fontFamily: "Arimo" },

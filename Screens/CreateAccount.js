@@ -1,17 +1,103 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import OnboardingStyles from "../Styles/OnboardingStyles";
-import { View, Image, Text, TextInput, TouchableOpacity, StatusBar} from "react-native";
-import { Controller, useForm } from "react-hook-form";
+import {
+  View,
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StatusBar,
+  Alert,
+} from "react-native";
 import { useFonts } from "expo-font";
 import PhoneInput from "react-native-phone-number-input";
 
-const CreateAccount = ({navigation}) => {
-  //Form Controllers
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+const CreateAccount = ({ navigation }) => {
+
+  const [customerData, setCustomerData] = useState({
+    customer_ID: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+    password: "",
+  });
+
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const handleChange = (fieldName, value) => {
+    setCustomerData({
+      ...customerData,
+      [fieldName]: value,
+    });
+  };
+
+  //Email Validation
+  const [emailError, setEmailError] = useState("");
+
+  useEffect(() => {
+    const regex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
+    const isValidEmail = regex.test(customerData.email);
+
+    if (customerData.email && !isValidEmail) {
+      setEmailError("Please input a valid email address");
+    } else {
+      setEmailError("");
+    }
+  }, [customerData.email]);
+
+  //Password Regex
+  const [passwordError, setPasswordError] = useState()
+  useEffect(()=>{
+    const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/
+    const isStrongPassword = regex.test(customerData.password)
+
+    if(customerData.password && !isStrongPassword){
+       setPasswordError("Your password should be 6 to 20 characters with 1 numeric digit, 1 uppercase and 1 lowercase letter")
+    }else{
+      setPasswordError("")
+    }
+  })
+
+  //Password Confirmation
+  const [confirmationError, setConfirmationError] = useState("")
+  useEffect(()=>{
+    if(customerData.password !== confirmPassword){
+       setConfirmationError("The passwords do not match!")
+    }else{
+      setConfirmationError("")
+    }
+  })
+
+  //Check for white space
+  const isEmptyOrWhitespace = (str) => {
+    return (str ?? '').trim() === '';
+  };
+
+  // Event handler for form submission
+  const signUp = () => {
+    if (
+      !customerData.firstName ||
+      !customerData.lastName ||
+      !customerData.email ||
+      !customerData.phoneNumber ||
+      !customerData.password ||
+      !confirmPassword
+    ) {
+      Alert.alert("Please fill in all required fields");
+    } else if(emailError !== ""){
+      Alert.alert("Please input a valid email address")
+      // console.log("Form data submitted:", customerData);
+      // console.log(confirmPassword);
+    }else if(passwordError !== ""){
+      Alert.alert("Please set a strong password")
+    }else if(confirmationError !== ""){
+      Alert.alert("The passwords do not match")
+    }else{
+      console.log("Form data submitted:", customerData);
+      console.log(confirmPassword);
+    }
+    navigation.navigate("Login")
+  };
 
   //Fonts
   let [fontLoaded] = useFonts({
@@ -22,12 +108,10 @@ const CreateAccount = ({navigation}) => {
   //Phone
   const phoneInput = useRef();
 
-
-
   if (fontLoaded) {
     return (
       <View style={OnboardingStyles.createAccount}>
-       <StatusBar  barStyle="light-content"/>
+        <StatusBar barStyle="light-content" />
         <View style={OnboardingStyles.createAccountHeader}>
           <View style={OnboardingStyles.logoCircle}>
             <Image
@@ -50,74 +134,54 @@ const CreateAccount = ({navigation}) => {
 
           {/* First Name */}
           <View style={OnboardingStyles.signupForm}>
-            <Controller
-              control={control}
-              render={({ field }) => (
-                <TextInput
-                  {...field}
-                  style={[
-                    { fontFamily: "DidactGothic" },
-                    OnboardingStyles.inputField,
-                  ]}
-                  placeholder="First Name"
-                  selectionColor={"black"}
-                />
-              )}
-              name="name"
-              rules={{ required: "You must enter your name" }}
+            <TextInput
+              style={[
+                { fontFamily: "DidactGothic" },
+                OnboardingStyles.inputField,
+              ]}
+              placeholder="First Name"
+              selectionColor={"black"}
+              value={customerData.firstName}
+              onChange={(e) =>
+                setCustomerData({
+                  ...customerData,
+                  firstName: e.nativeEvent.text,
+                })
+              }
             />
-
-            {errors.name && (
-              <Text style={styles.errorText}>{errors.name.message}</Text>
-            )}
 
             {/* Last Name */}
-            <Controller
-              control={control}
-              render={({ field }) => (
-                <TextInput
-                  {...field}
-                  style={[
-                    { fontFamily: "DidactGothic" },
-                    OnboardingStyles.inputField,
-                  ]}
-                  placeholder="Last Name"
-                  selectionColor={"black"}
-                />
-              )}
-              name="name"
-              rules={{ required: "You must enter your name" }}
+            <TextInput
+              style={[
+                { fontFamily: "DidactGothic" },
+                OnboardingStyles.inputField,
+              ]}
+              placeholder="Last Name"
+              selectionColor={"black"}
+              value={customerData.lastName}
+              onChange={(e) =>
+                setCustomerData({
+                  ...customerData,
+                  lastName: e.nativeEvent.text,
+                })
+              }
             />
-
-            {errors.name && (
-              <Text style={styles.errorText}>{errors.name.message}</Text>
-            )}
 
             {/* Email */}
-            <Controller
-              control={control}
-              render={({ field }) => (
-                <TextInput
-                  {...field}
-                  style={[
-                    { fontFamily: "DidactGothic" },
-                    OnboardingStyles.inputField,
-                  ]}
-                  placeholder="Email"
-                  selectionColor={"black"}
-                />
-              )}
-              name="email"
-              rules={{
-                required: "You must enter your name",
-                pattern: {
-                  value: /^\S+@\S+$/i,
-                  message: "Enter a valid email address",
-                },
-              }}
+            <TextInput
+              style={[
+                { fontFamily: "DidactGothic" },
+                OnboardingStyles.inputField,
+              ]}
+              placeholder="Email"
+              selectionColor={"black"}
+              value={customerData.email}
+              onChange={(e) =>
+                setCustomerData({ ...customerData, email: e.nativeEvent.text })
+              }
             />
-            {errors.email && (
-              <Text style={styles.errorText}>{errors.email.message}</Text>
+            {!isEmptyOrWhitespace(emailError) && (
+              <Text style={OnboardingStyles.errorText}>{emailError}</Text>
             )}
 
             {/* Phone Number */}
@@ -125,9 +189,6 @@ const CreateAccount = ({navigation}) => {
               ref={phoneInput}
               defaultValue=""
               defaultCode="KE"
-              // onChangeFormattedText={(text) => {
-              //   setValue(text);
-              // }}
               containerStyle={OnboardingStyles.phoneInput}
               textContainerStyle={OnboardingStyles.phoneInputField}
               textInputStyle={[
@@ -136,67 +197,53 @@ const CreateAccount = ({navigation}) => {
               ]}
               flagButtonStyle={OnboardingStyles.flagButton}
               codeTextStyle={OnboardingStyles.code}
+              value={customerData.phoneNumber}
+              onChangeFormattedText={(text) => {
+                setCustomerData({ ...customerData, phoneNumber: text });
+              }}
             />
 
             {/* Password */}
-            <Controller
-              control={control}
-              render={({ field }) => (
-                <TextInput
-                  {...field}
-                  style={[
-                    { fontFamily: "DidactGothic" },
-                    OnboardingStyles.inputField,
-                  ]}
-                  placeholder="Password"
-                  selectionColor={"black"}
-                  secureTextEntry={true}
-                />
-              )}
-              name="password"
-              rules={{
-                required: "You must enter your name",
-                pattern: {
-                  value: /^[A-Za-z]\w{7,14}$/,
-                  message: "Use a strong password",
-                },
-              }}
+            <TextInput
+              style={[
+                { fontFamily: "DidactGothic" },
+                OnboardingStyles.inputField,
+              ]}
+              placeholder="Password"
+              selectionColor={"black"}
+              secureTextEntry={true}
+              value={customerData.password}
+              onChange={(e) =>
+                setCustomerData({
+                  ...customerData,
+                  password: e.nativeEvent.text,
+                })
+              }
             />
-            {errors.email && (
-              <Text style={styles.errorText}>{errors.password.message}</Text>
+            {!isEmptyOrWhitespace(passwordError) && (
+              <Text style={OnboardingStyles.errorText}>{passwordError}</Text>
             )}
 
-            <Controller
-              control={control}
-              render={({ field }) => (
-                <TextInput
-                  {...field}
-                  style={[
-                    { fontFamily: "DidactGothic" },
-                    OnboardingStyles.inputField,
-                  ]}
-                  placeholder="Confirm Password"
-                  selectionColor={"black"}
-                  secureTextEntry={true}
-                />
-              )}
-              name="confirmpassword"
-              rules={{
-                required: "You must enter your name",
-                pattern: {
-                  value: /^[A-Za-z]\w{7,14}$/,
-                  message: "Use a strong password",
-                },
-              }}
+             <Text>{passwordError}</Text>
+            <TextInput
+              style={[
+                { fontFamily: "DidactGothic" },
+                OnboardingStyles.inputField,
+              ]}
+              placeholder="Confirm Password"
+              selectionColor={"black"}
+              secureTextEntry={true}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.nativeEvent.text)}
             />
-            {errors.email && (
-              <Text style={styles.errorText}>
-                {errors.confirmpassword.message}
-              </Text>
+             {!isEmptyOrWhitespace(confirmationError) && (
+              <Text style={OnboardingStyles.errorText}>{confirmationError}</Text>
             )}
-
             {/* Button */}
-            <TouchableOpacity style={OnboardingStyles.signupBtn} onPress={()=> navigation.navigate('AccountVerification')}>
+            <TouchableOpacity
+              style={OnboardingStyles.signupBtn}
+              onPress={signUp}
+            >
               <Text
                 style={[
                   { fontFamily: "Arimo" },
@@ -207,9 +254,24 @@ const CreateAccount = ({navigation}) => {
               </Text>
             </TouchableOpacity>
             <View style={OnboardingStyles.alreadyHaveAccount}>
-             <Text style={[{fontFamily: 'DidactGothic'}, OnboardingStyles.alreadyText]}>Already have an account?</Text>
-             <Text style={[{fontFamily: 'DidactGothic'}, OnboardingStyles.loginLink]} onPress={() => navigation.navigate('Login')}>Log in</Text>
-          </View>
+              <Text
+                style={[
+                  { fontFamily: "DidactGothic" },
+                  OnboardingStyles.alreadyText,
+                ]}
+              >
+                Already have an account?
+              </Text>
+              <Text
+                style={[
+                  { fontFamily: "DidactGothic" },
+                  OnboardingStyles.loginLink,
+                ]}
+                onPress={() => navigation.navigate("Login")}
+              >
+                Log in
+              </Text>
+            </View>
           </View>
         </View>
       </View>
