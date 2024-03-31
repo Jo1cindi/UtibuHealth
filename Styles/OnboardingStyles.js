@@ -3,14 +3,16 @@ import { Dimensions, StyleSheet } from "react-native";
 const { height, width } = Dimensions.get("window");
 
 //Colors
-const green = "#465902";
+const green = "#697E51";
 const white = "#EEEEEE";
-const red = "#592502";
+const red = "#705335";
+const lightGreen = "#DDF0C7"
+const mediumGreen = "#99B07F"
 
 const OnboardingStyles = StyleSheet.create({
   // Splash Screen
   splashStyle: {
-    backgroundColor: white,
+    backgroundColor: lightGreen,
     height: height,
     width: width,
     flex: 1,
@@ -32,7 +34,7 @@ const OnboardingStyles = StyleSheet.create({
   createAccountHeader: {
     width: width,
     height: 150,
-    backgroundColor: red,
+    backgroundColor: lightGreen,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -162,7 +164,7 @@ const OnboardingStyles = StyleSheet.create({
   loginHeader:{
     width: '100%',
     height: 150,
-    backgroundColor: green,
+    backgroundColor: lightGreen,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',

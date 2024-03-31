@@ -97,7 +97,7 @@ const Login = ({ navigation }) => {
             {/* Button */}
             <TouchableOpacity
               style={OnboardingStyles.signinBtn}
-              onPress={login}
+              onPress={()=> navigation.navigate("Home")}
             >
               <Text
                 style={[
