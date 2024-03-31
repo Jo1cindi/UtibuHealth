@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity, TextInput } from "react-native";
+import { View, Text, Image, TouchableOpacity, TextInput, Alert } from "react-native";
 import React, { useState, useEffect } from "react";
 import OnboardingStyles from "../Styles/OnboardingStyles";
 import { useFonts } from "expo-font";
@@ -13,7 +13,7 @@ const Login = ({ navigation }) => {
   const login = () => {
     console.log(loginData);
 
-    if (!loginData.email || loginData.password) {
+    if (!loginData.email || !loginData.password) {
       Alert.alert("Please fill in all required fields");
     } else if (emailError !== "") {
       Alert.alert("Please input a valid email address");
@@ -25,7 +25,7 @@ const Login = ({ navigation }) => {
 
   useEffect(() => {
     const regex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
-    const isValidEmail = regex.test(customerData.email);
+    const isValidEmail = regex.test(loginData.email);
 
     if (loginData.email && !isValidEmail) {
       setEmailError("Please input a valid email address");

@@ -1,16 +1,76 @@
-import { View, Text, Image, TouchableOpacity, TextInput } from "react-native";
-import React from "react";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  Alert,
+} from "react-native";
+import React, { useState, useEffect } from "react";
 import OnboardingStyles from "../Styles/OnboardingStyles";
 import { useFonts } from "expo-font";
-import { Controller, useForm } from "react-hook-form";
 
 const ResetPassword = () => {
-  //Form Controllers
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const [resetData, setResetData] = useState({
+    email: "",
+    newPassword: "",
+  });
+
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  //Email Validation
+  const [emailError, setEmailError] = useState("");
+
+  useEffect(() => {
+    const regex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
+    const isValidEmail = regex.test(resetData.email);
+
+    if (resetData.email && !isValidEmail) {
+      setEmailError("Please input a valid email address");
+    } else {
+      setEmailError("");
+    }
+  }, [resetData.email]);
+
+  //Password Validation
+  const [passwordError, setPasswordError] = useState();
+  useEffect(() => {
+    const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+    const isStrongPassword = regex.test(resetData.newPassword);
+
+    if (resetData.newPassword && !isStrongPassword) {
+      setPasswordError(
+        "Your password should be 6 to 20 characters with 1 numeric digit, 1 uppercase and 1 lowercase letter"
+      );
+    } else {
+      setPasswordError("");
+    }
+  }, [resetData.newPassword]);
+
+  //Password Confirmation
+  const [confirmationError, setConfirmationError] = useState("");
+  useEffect(() => {
+    if (resetData.newPassword !== confirmPassword) {
+      setConfirmationError("The passwords do not match!");
+    } else {
+      setConfirmationError("");
+    }
+  });
+
+  //Check for white space
+  const isEmptyOrWhitespace = (str) => {
+    return (str ?? "").trim() === "";
+  };
+
+  //Reset Password
+  const handleResetPassword = () => {
+    console.log(resetData);
+    if (!resetData.newPassword || !resetData.email) {
+      Alert.alert("Please fill in all required fields");
+    } else if (resetData.newPassword !== confirmPassword) {
+      Alert.alert("The passwords do not match");
+    }
+  };
 
   //Fonts
   let [fontLoaded] = useFonts({
@@ -29,98 +89,72 @@ const ResetPassword = () => {
             />
           </View>
         </View>
-        {/* Login Form */}
+        {/* Reset Password Form */}
         <View style={OnboardingStyles.loginForm}>
-          <Text style={[{ fontFamily: "Arimo" }, OnboardingStyles.createAccountTitle]}>
+          <Text
+            style={[
+              { fontFamily: "Arimo" },
+              OnboardingStyles.createAccountTitle,
+            ]}
+          >
             Reset Your Password
           </Text>
 
           <View style={OnboardingStyles.signinForm}>
             {/* Email */}
-            <Controller
-              control={control}
-              render={({ field }) => (
-                <TextInput
-                  {...field}
-                  style={[
-                    { fontFamily: "DidactGothic" },
-                    OnboardingStyles.inputField,
-                  ]}
-                  placeholder="Email"
-                  selectionColor={"black"}
-                />
-              )}
-              name="email"
-              rules={{
-                required: "You must enter your name",
-                pattern: {
-                  value: /^\S+@\S+$/i,
-                  message: "Enter a valid email address",
-                },
-              }}
+            <TextInput
+              style={[
+                { fontFamily: "DidactGothic" },
+                OnboardingStyles.inputField,
+              ]}
+              placeholder="Email"
+              selectionColor={"black"}
+              value={resetData.email}
+              onChange={(e) =>
+                setResetData({ ...resetData, email: e.nativeEvent.text })
+              }
             />
-            {errors.email && (
-              <Text style={styles.errorText}>{errors.email.message}</Text>
+            {!isEmptyOrWhitespace(emailError) && (
+              <Text style={OnboardingStyles.errorText}>{emailError}</Text>
             )}
-
+            <TextInput
+              style={[
+                { fontFamily: "DidactGothic" },
+                OnboardingStyles.inputField,
+              ]}
+              placeholder="New Password"
+              selectionColor={"black"}
+              secureTextEntry={true}
+              value={resetData.newPassword}
+              onChange={(e) =>
+                setResetData({ ...resetData, newPassword: e.nativeEvent.text })
+              }
+            />
+            {!isEmptyOrWhitespace(passwordError) && (
+              <Text style={OnboardingStyles.errorText}>{passwordError}</Text>
+            )}
             {/* Password */}
-            <Controller
-              control={control}
-              render={({ field }) => (
-                <TextInput
-                  {...field}
-                  style={[
-                    { fontFamily: "DidactGothic" },
-                    OnboardingStyles.inputField,
-                  ]}
-                  placeholder="New Password"
-                  selectionColor={"black"}
-                  secureTextEntry={true}
-                />
-              )}
-              name="password"
-              rules={{
-                required: "You must enter your name",
-                pattern: {
-                  value: /^[A-Za-z]\w{7,14}$/,
-                  message: "Use a strong password",
-                },
-              }}
+            <TextInput
+              style={[
+                { fontFamily: "DidactGothic" },
+                OnboardingStyles.inputField,
+              ]}
+              placeholder="Confirm Password"
+              selectionColor={"black"}
+              secureTextEntry={true}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.nativeEvent.text)}
             />
-            {errors.email && (
-              <Text style={styles.errorText}>{errors.password.message}</Text>
+            {!isEmptyOrWhitespace(confirmationError) && (
+              <Text style={OnboardingStyles.errorText}>
+                {confirmationError}
+              </Text>
             )}
-
-            {/* Password */}
-            <Controller
-              control={control}
-              render={({ field }) => (
-                <TextInput
-                  {...field}
-                  style={[
-                    { fontFamily: "DidactGothic" },
-                    OnboardingStyles.inputField,
-                  ]}
-                  placeholder="Confirm Password"
-                  selectionColor={"black"}
-                  secureTextEntry={true}
-                />
-              )}
-              name="password"
-              rules={{
-                required: "You must enter your name",
-                pattern: {
-                  value: /^[A-Za-z]\w{7,14}$/,
-                  message: "Use a strong password",
-                },
-              }}
-            />
-            {errors.email && (
-              <Text style={styles.errorText}>{errors.password.message}</Text>
-            )}
-
             {/* Button */}
-            <TouchableOpacity style={OnboardingStyles.signupBtn}>
+            <TouchableOpacity
+              style={OnboardingStyles.signupBtn}
+              onPress={handleResetPassword}
+            >
               <Text
                 style={[
                   { fontFamily: "Arimo" },
@@ -130,7 +164,6 @@ const ResetPassword = () => {
                 Reset Password
               </Text>
             </TouchableOpacity>
-            
           </View>
         </View>
       </View>
