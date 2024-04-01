@@ -57,8 +57,6 @@ const Login = ({ navigation }) => {
           } catch (error) {
             console.error('Error storing authentication name:', error);
           }
-          console.log(response.status)
-          console.log(response.data.token)
         }
     }).catch((error)=>{
       console.log(error)

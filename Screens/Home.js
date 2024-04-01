@@ -1,10 +1,11 @@
 import { View, Text, TouchableOpacity, TextInput, Image } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import HomeStyles from "../Styles/HomeStyles";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
-import icon1 from "../Images/medicine.png"
+import icon1 from "../Images/medicine.png";
 import OnboardingStyles from "../Styles/OnboardingStyles";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Home = () => {
   //Fonts
@@ -32,11 +33,26 @@ const Home = () => {
     },
   ];
 
+  // Getting user's name
+  const [name, setName] = useState("");
+  useEffect(() => {
+    const getName  = async()=>{
+      try {
+        const storedName = await AsyncStorage.getItem('userName');
+        if (storedName !== null) {
+          setName(storedName)
+          console.log('Retrieved value:', storedName);
+        } else {
+          console.log('No data found for the key');
+        }
+      } catch (error) {
+        console.error('Error retrieving data:', error);
+      }
+    }
+    getName()
+  });
 
   if (fontLoaded) {
-    const icons = () =>{
-        
-    }
     return (
       <View style={HomeStyles.homeContainer}>
         {/* Menu */}
@@ -70,7 +86,7 @@ const Home = () => {
             Welcome
           </Text>
           <Text style={[{ fontFamily: "DidactGothic" }, HomeStyles.userName]}>
-            John
+            {name}
           </Text>
         </View>
 
@@ -109,20 +125,29 @@ const Home = () => {
 
         {/* Categories */}
         <View style={HomeStyles.categories}>
-          <Text style={[{fontFamily: "Arimo"}, HomeStyles.categoriesTitle]}>Categories</Text>
+          <Text style={[{ fontFamily: "Arimo" }, HomeStyles.categoriesTitle]}>
+            Categories
+          </Text>
           <View style={HomeStyles.categoryItems}>
-             {
-               categories.map((category, index)=>(
-                <View style={HomeStyles.categoryItem}>
-                <Image source={category.icon} key={index} style={HomeStyles.categoryIcon}/>
-                <Text style={[{fontFamily: "DidactGothic"}, HomeStyles.categoryDesc]}>{category.name}</Text>
-                </View>
-               ))
-             }
+            {categories.map((category, index) => (
+              <View style={HomeStyles.categoryItem} key={index}>
+                <Image
+                  source={category.icon}
+                  key={index}
+                  style={HomeStyles.categoryIcon}
+                />
+                <Text
+                  style={[
+                    { fontFamily: "DidactGothic" },
+                    HomeStyles.categoryDesc,
+                  ]}
+                >
+                  {category.name}
+                </Text>
+              </View>
+            ))}
           </View>
         </View>
-
-
       </View>
     );
   }
