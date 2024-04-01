@@ -16,7 +16,7 @@ const SplashScreen = ({ navigation }) => {
     try {
       const token = await AsyncStorage.getItem('authToken');
       if(token){
-        navigation.navigate("Home");
+        navigation.navigate("Login");
       }else{
         navigation.navigate("CreateAccount");
       }

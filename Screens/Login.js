@@ -39,8 +39,9 @@ const Login = ({ navigation }) => {
       data: loginData
     }).then ( async(response)=>{
         if(response.status === 200){
-          navigation.navigate("Login")
-
+          
+          navigation.navigate("Home")
+     
           //Storing token 
           try {
             await AsyncStorage.setItem('authToken', response.data.token);
@@ -54,15 +55,14 @@ const Login = ({ navigation }) => {
             await AsyncStorage.setItem('userName', response.data.name);
             console.log('Name stored successfully');
           } catch (error) {
-            console.error('Error storing name:', error);
+            console.error('Error storing authentication name:', error);
           }
-         
+          console.log(response.status)
           console.log(response.data.token)
-        }else if(response.status === 401){
-          setLoginError("Incorrect Email or Password")
         }
     }).catch((error)=>{
       console.log(error)
+      setLoginError("Incorrect Email or Password")
     });
   };
 
@@ -155,9 +155,7 @@ const Login = ({ navigation }) => {
               </Text>
             </TouchableOpacity>
 
-            {!isEmptyOrWhitespace(loginError) && (
-              <Text style={OnboardingStyles.errorText}>{loginError}</Text>
-            )}
+            <Text style={OnboardingStyles.errorText}>{loginError}</Text>
 
             <View style={OnboardingStyles.forgotPassword}>
               <Text
