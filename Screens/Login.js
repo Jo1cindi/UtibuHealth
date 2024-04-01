@@ -10,7 +10,7 @@ import React, { useState, useEffect } from "react";
 import OnboardingStyles from "../Styles/OnboardingStyles";
 import { useFonts } from "expo-font";
 import axios from "axios";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Login = ({ navigation }) => {
   const [loginData, setLoginData] = useState({
@@ -18,7 +18,7 @@ const Login = ({ navigation }) => {
     password: "",
   });
 
-  
+
   //Login
   const [loginError, setLoginError] = useState("")
   const url =
@@ -40,8 +40,10 @@ const Login = ({ navigation }) => {
     }).then((response)=>{
         if(response.status === 200){
           // navigation.navigate("Login")
-          localStorage.setItem("token", response)
+          AsyncStorage.setItem("token", response.data.token)
+          AsyncStorage.setItem("name", response.data.name)
           console.log(response.data.token)
+          console.log(response.data.name)
         }else if(response.status === 401){
           setLoginError("Incorrect Email or Password")
         }
@@ -138,6 +140,11 @@ const Login = ({ navigation }) => {
                 Login
               </Text>
             </TouchableOpacity>
+
+            {!isEmptyOrWhitespace(loginError) && (
+              <Text style={OnboardingStyles.errorText}>{loginError}</Text>
+            )}
+
             <View style={OnboardingStyles.forgotPassword}>
               <Text
                 style={[

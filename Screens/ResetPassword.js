@@ -9,11 +9,12 @@ import {
 import React, { useState, useEffect } from "react";
 import OnboardingStyles from "../Styles/OnboardingStyles";
 import { useFonts } from "expo-font";
+import axios from "axios";
 
 const ResetPassword = () => {
   const [resetData, setResetData] = useState({
     email: "",
-    newPassword: "",
+    password: "",
   });
 
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -38,19 +39,19 @@ const ResetPassword = () => {
     const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
     const isStrongPassword = regex.test(resetData.newPassword);
 
-    if (resetData.newPassword && !isStrongPassword) {
+    if (resetData.password && !isStrongPassword) {
       setPasswordError(
         "Your password should be 6 to 20 characters with 1 numeric digit, 1 uppercase and 1 lowercase letter"
       );
     } else {
       setPasswordError("");
     }
-  }, [resetData.newPassword]);
+  }, [resetData.password]);
 
   //Password Confirmation
   const [confirmationError, setConfirmationError] = useState("");
   useEffect(() => {
-    if (resetData.newPassword !== confirmPassword) {
+    if (resetData.password !== confirmPassword) {
       setConfirmationError("The passwords do not match!");
     } else {
       setConfirmationError("");
@@ -63,13 +64,25 @@ const ResetPassword = () => {
   };
 
   //Reset Password
+  const url = "http://ec2-18-133-195-128.eu-west-2.compute.amazonaws.com:8080/api/resetpassword"
   const handleResetPassword = () => {
     console.log(resetData);
-    if (!resetData.newPassword || !resetData.email) {
+    if (!resetData.password || !resetData.email) {
       Alert.alert("Please fill in all required fields");
-    } else if (resetData.newPassword !== confirmPassword) {
+    } else if (resetData.password !== confirmPassword) {
       Alert.alert("The passwords do not match");
     }
+
+    axios({
+      method: "PUT",
+      url: url,
+      headers: { "Content-Type": "application/json" },
+      data: resetData
+    }).then((response)=>{
+      console.log(response)
+    }).catch((error)=>{
+      console.log(error)
+    })
   };
 
   //Fonts
@@ -127,7 +140,7 @@ const ResetPassword = () => {
               secureTextEntry={true}
               value={resetData.newPassword}
               onChange={(e) =>
-                setResetData({ ...resetData, newPassword: e.nativeEvent.text })
+                setResetData({ ...resetData, password: e.nativeEvent.text })
               }
             />
             {!isEmptyOrWhitespace(passwordError) && (
