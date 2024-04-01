@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { useFonts } from "expo-font";
 import PhoneInput from "react-native-phone-number-input";
+import axios from "axios";
 
 const CreateAccount = ({ navigation }) => {
   const [customerData, setCustomerData] = useState({
@@ -68,12 +69,10 @@ const CreateAccount = ({ navigation }) => {
     return (str ?? "").trim() === "";
   };
 
-  //User Exists
-  const [userExists, setUserExists] = useState("");
-
   // Event handler for form submission
+  const [userExists, setUserExists] = useState("");
+  
   const signUp = () => {
-    
     const url =
       "http://ec2-18-133-195-128.eu-west-2.compute.amazonaws.com:8080/api/signup";
 
@@ -89,40 +88,31 @@ const CreateAccount = ({ navigation }) => {
       Alert.alert("Please fill in all required fields");
     } else if (emailError !== "") {
       Alert.alert("Please input a valid email address");
-      // console.log("Form data submitted:", customerData);
-      // console.log(confirmPassword);
     } else if (passwordError !== "") {
       Alert.alert("Please set a strong password");
     } else if (confirmationError !== "") {
       Alert.alert("The passwords do not match");
     } else {
-      fetch(url, {
+      axios({
         method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.parse(JSON.stringify(customerData)),
+        url: url,
+        headers: { "Content-Type": "application/json" },
+        data: customerData,
       })
         .then((response) => {
-          response.json();
           console.log(response);
           if (response.status === 200) {
             navigation.navigate("Login");
           } else if (response.status === 409) {
-            setUserExists("User already exists");
+            setUserExists("This user already exists");
           }
-        })
-        .then((responseJson) => {
-          console.log("response object:", responseJson);
         })
         .catch((error) => {
           console.log(error);
         });
-      console.log(customerData);
     }
 
-    // navigation.navigate("Login")
+    //
   };
 
   //Fonts
@@ -192,6 +182,7 @@ const CreateAccount = ({ navigation }) => {
                 })
               }
             />
+
             {/* Email */}
             <TextInput
               style={[
@@ -249,7 +240,6 @@ const CreateAccount = ({ navigation }) => {
               <Text style={OnboardingStyles.errorText}>{passwordError}</Text>
             )}
 
-            <Text>{passwordError}</Text>
             <TextInput
               style={[
                 { fontFamily: "DidactGothic" },
@@ -280,13 +270,6 @@ const CreateAccount = ({ navigation }) => {
                 Create Your Account
               </Text>
             </TouchableOpacity>
-
-            {!isEmptyOrWhitespace(userExists) && (
-              <Text style={OnboardingStyles.errorText}>
-                {userExists}
-              </Text>
-            )}
-
             <View style={OnboardingStyles.alreadyHaveAccount}>
               <Text
                 style={[
@@ -294,6 +277,11 @@ const CreateAccount = ({ navigation }) => {
                   OnboardingStyles.alreadyText,
                 ]}
               >
+
+                {!isEmptyOrWhitespace(userExists) && (
+                  <Text style={OnboardingStyles.errorText}>{userExists}</Text>
+                )}
+
                 Already have an account?
               </Text>
               <Text

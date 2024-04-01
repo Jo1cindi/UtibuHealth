@@ -1,7 +1,16 @@
-import { View, Text, Image, TouchableOpacity, TextInput, Alert } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  Alert,
+} from "react-native";
 import React, { useState, useEffect } from "react";
 import OnboardingStyles from "../Styles/OnboardingStyles";
 import { useFonts } from "expo-font";
+import axios from "axios";
+
 
 const Login = ({ navigation }) => {
   const [loginData, setLoginData] = useState({
@@ -9,8 +18,12 @@ const Login = ({ navigation }) => {
     password: "",
   });
 
+  
   //Login
-  const login = () => {
+  const [loginError, setLoginError] = useState("")
+  const url =
+    "http://ec2-18-133-195-128.eu-west-2.compute.amazonaws.com:8080/api/signin";
+  const login = async () => {
     console.log(loginData);
 
     if (!loginData.email || !loginData.password) {
@@ -18,6 +31,23 @@ const Login = ({ navigation }) => {
     } else if (emailError !== "") {
       Alert.alert("Please input a valid email address");
     }
+
+    axios({
+      method: "POST",
+      url: url,
+      headers: { "Content-Type": "application/json" },
+      data: loginData
+    }).then((response)=>{
+        if(response.status === 200){
+          // navigation.navigate("Login")
+          localStorage.setItem("token", response)
+          console.log(response.data.token)
+        }else if(response.status === 401){
+          setLoginError("Incorrect Email or Password")
+        }
+    }).catch((error)=>{
+      console.log(error)
+    });
   };
 
   //Email Validation
@@ -97,7 +127,7 @@ const Login = ({ navigation }) => {
             {/* Button */}
             <TouchableOpacity
               style={OnboardingStyles.signinBtn}
-              onPress={()=> navigation.navigate("Home")}
+              onPress={login}
             >
               <Text
                 style={[
