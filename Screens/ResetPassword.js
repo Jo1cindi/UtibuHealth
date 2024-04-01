@@ -37,7 +37,7 @@ const ResetPassword = () => {
   const [passwordError, setPasswordError] = useState();
   useEffect(() => {
     const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
-    const isStrongPassword = regex.test(resetData.newPassword);
+    const isStrongPassword = regex.test(resetData.password);
 
     if (resetData.password && !isStrongPassword) {
       setPasswordError(

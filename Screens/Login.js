@@ -37,13 +37,27 @@ const Login = ({ navigation }) => {
       url: url,
       headers: { "Content-Type": "application/json" },
       data: loginData
-    }).then((response)=>{
+    }).then ( async(response)=>{
         if(response.status === 200){
-          // navigation.navigate("Login")
-          AsyncStorage.setItem("token", response.data.token)
-          AsyncStorage.setItem("name", response.data.name)
+          navigation.navigate("Login")
+
+          //Storing token 
+          try {
+            await AsyncStorage.setItem('authToken', response.data.token);
+            console.log('Authentication token stored successfully');
+          } catch (error) {
+            console.error('Error storing authentication token:', error);
+          }
+
+          //Storing name
+          try {
+            await AsyncStorage.setItem('userName', response.data.name);
+            console.log('Name stored successfully');
+          } catch (error) {
+            console.error('Error storing name:', error);
+          }
+         
           console.log(response.data.token)
-          console.log(response.data.name)
         }else if(response.status === 401){
           setLoginError("Incorrect Email or Password")
         }
