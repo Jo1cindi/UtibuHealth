@@ -112,7 +112,15 @@ const HomeStyles = StyleSheet.create({
     borderRadius: 10,
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    shadowColor: 'rgba(0, 0, 0, 0.5)',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.8,
+    shadowRadius: 4,
+    borderRadius: 10,
   },
   categoryIcon:{
    width: 50,
