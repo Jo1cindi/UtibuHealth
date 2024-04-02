@@ -3,11 +3,10 @@ import React, { useEffect, useState } from "react";
 import HomeStyles from "../Styles/HomeStyles";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
-import icon1 from "../Images/medicine.png";
-import OnboardingStyles from "../Styles/OnboardingStyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Header from "../Components/Header";
 
-const Home = () => {
+const Home = ({navigation}) => {
   //Fonts
   let [fontLoaded] = useFonts({
     Arimo: require("../assets/fonts/Arimo-VariableFont_wght.ttf"),
@@ -16,18 +15,22 @@ const Home = () => {
 
   const categories = [
     {
+      id:1,
       name: "Antibiotics",
       icon: require("../Images/medicine.png"),
     },
     {
+      id:2,
       name: "Insulin",
       icon: require("../Images/insulin.png"),
     },
     {
+      id: 3,
       name: "ARVs",
       icon: require("../Images/capsules.png"),
     },
     {
+      id:4,
       name: "Vaccines",
       icon: require("../Images/vaccine.png"),
     },
@@ -41,7 +44,6 @@ const Home = () => {
         const storedName = await AsyncStorage.getItem('userName');
         if (storedName !== null) {
           setName(storedName)
-          console.log('Retrieved value:', storedName);
         } else {
           console.log('No data found for the key');
         }
@@ -54,31 +56,9 @@ const Home = () => {
 
   if (fontLoaded) {
     return (
-      <View style={HomeStyles.homeContainer}>
+      <View style={HomeStyles.container}>
         {/* Menu */}
-        <View style={HomeStyles.topMenu}>
-          <View style={HomeStyles.searchBox}>
-            <Icon
-              name="search"
-              size={24}
-              style={{ marginRight: 10, marginLeft: 10, color: "gray" }}
-            />
-            <TextInput
-              placeholder="search"
-              selectionColor={"black"}
-              style={{ fontFamily: "DidactGothic" }}
-            />
-          </View>
-          <View style={HomeStyles.cartBox}>
-            <TouchableOpacity>
-              <Icon
-                name="shopping-cart"
-                size={36}
-                style={{ color: "#705335" }}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
+        <Header/>
 
         {/* Welcome */}
         <View style={HomeStyles.welcomeBox}>
@@ -130,8 +110,10 @@ const Home = () => {
           </Text>
           <View style={HomeStyles.categoryItems}>
             {categories.map((category, index) => (
-              <View style={HomeStyles.categoryItem} key={index}>
-                <Image
+              <TouchableOpacity style={HomeStyles.categoryItem} key={index} onPress={()=> {
+                category.id === 1 ? navigation.navigate("Antibiotics") : category.id === 2 ? navigation.navigate("Insulin") : category.id === 3 ? navigation.navigate("Arv") : navigation.navigate("Vaccines")
+              }}>
+              <Image
                   source={category.icon}
                   key={index}
                   style={HomeStyles.categoryIcon}
@@ -144,7 +126,7 @@ const Home = () => {
                 >
                   {category.name}
                 </Text>
-              </View>
+              </TouchableOpacity>
             ))}
           </View>
         </View>

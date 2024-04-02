@@ -8,43 +8,54 @@ const brown = "#705335";
 const lightGreen = "#DDF0C7";
 
 const HomeStyles = StyleSheet.create({
-  homeContainer: {
+   container: {
     width: width,
     height: height,
     backgroundColor: white,
     flex: 1,
     alignItems: "center",
   },
-  topMenu: {
+  header: {
     width: "90%",
     marginTop: "20px",
-    height: 70,
+    height: 80,
     marginTop: 20,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
-  searchBox: {
-    width: "60%",
-    height: 50,
+  topMenu: {
+    width: "90%",
+    marginTop: "20px",
+    height: 80,
+    marginTop: 20,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  logo: {
+    width: 75,
+    height:75 ,
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     borderRadius: 10,
-    backgroundColor: "#ddd",
   },
-  searchInput: {
-    width: "85%",
-    height: 50,
-    fontSize: 14,
+  logoImage: {
+    width:'100%',
+    height:'100%',
+    resizeMode: 'contain'
   },
+  
   cartBox: {
-    width: "20%",
+    width: "auto",
     height: 50,
     display: "flex",
-    alignItems: "flex-end",
-    justifyContent: "center",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
   },
   welcomeBox: {
     width: "90%",
