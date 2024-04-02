@@ -105,7 +105,7 @@ const Antibiotics = ({navigation}) => {
               textAlign: "center",
             }}
           >
-            ARVs
+            Antibiotics
           </Text>
           <View style={HomeStyles.cartBox}>
             <TouchableOpacity>

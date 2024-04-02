@@ -142,8 +142,12 @@ const HomeStyles = StyleSheet.create({
    color: brown,
    marginTop: 5,
    fontWeight: 'bold'
+  },
+  medicineBox:{
+    width: '90%',
+    height: 500,
+    backgroundColor: 'maroon'
   }
-
 });
 
 export default HomeStyles;

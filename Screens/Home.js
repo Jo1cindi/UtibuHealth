@@ -6,7 +6,7 @@ import { useFonts } from "expo-font";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Header from "../Components/Header";
 
-const Home = ({navigation}) => {
+const Home = ({ navigation }) => {
   //Fonts
   let [fontLoaded] = useFonts({
     Arimo: require("../assets/fonts/Arimo-VariableFont_wght.ttf"),
@@ -15,12 +15,12 @@ const Home = ({navigation}) => {
 
   const categories = [
     {
-      id:1,
+      id: 1,
       name: "Antibiotics",
       icon: require("../Images/medicine.png"),
     },
     {
-      id:2,
+      id: 2,
       name: "Insulin",
       icon: require("../Images/insulin.png"),
     },
@@ -30,7 +30,7 @@ const Home = ({navigation}) => {
       icon: require("../Images/capsules.png"),
     },
     {
-      id:4,
+      id: 4,
       name: "Vaccines",
       icon: require("../Images/vaccine.png"),
     },
@@ -39,26 +39,26 @@ const Home = ({navigation}) => {
   // Getting user's name
   const [name, setName] = useState("");
   useEffect(() => {
-    const getName  = async()=>{
+    const getName = async () => {
       try {
-        const storedName = await AsyncStorage.getItem('userName');
+        const storedName = await AsyncStorage.getItem("userName");
         if (storedName !== null) {
-          setName(storedName)
+          setName(storedName);
         } else {
-          console.log('No data found for the key');
+          console.log("No data found for the key");
         }
       } catch (error) {
-        console.error('Error retrieving data:', error);
+        console.error("Error retrieving data:", error);
       }
-    }
-    getName()
+    };
+    getName();
   });
 
   if (fontLoaded) {
     return (
       <View style={HomeStyles.container}>
         {/* Menu */}
-        <Header/>
+        <Header />
 
         {/* Welcome */}
         <View style={HomeStyles.welcomeBox}>
@@ -110,10 +110,20 @@ const Home = ({navigation}) => {
           </Text>
           <View style={HomeStyles.categoryItems}>
             {categories.map((category, index) => (
-              <TouchableOpacity style={HomeStyles.categoryItem} key={index} onPress={()=> {
-                category.id === 1 ? navigation.navigate("Antibiotics") : category.id === 2 ? navigation.navigate("Insulin") : category.id === 3 ? navigation.navigate("Arv") : navigation.navigate("Vaccines")
-              }}>
-              <Image
+              <TouchableOpacity
+                style={HomeStyles.categoryItem}
+                key={index}
+                onPress={() => {
+                  category.id === 1
+                    ? navigation.navigate("Antibiotics")
+                    : category.id === 2
+                    ? navigation.navigate("Insulin")
+                    : category.id === 3
+                    ? navigation.navigate("Arv")
+                    : navigation.navigate("Vaccines");
+                }}
+              >
+                <Image
                   source={category.icon}
                   key={index}
                   style={HomeStyles.categoryIcon}
@@ -129,6 +139,10 @@ const Home = ({navigation}) => {
               </TouchableOpacity>
             ))}
           </View>
+        </View>
+
+        <View style={HomeStyles.medicineBox}>
+
         </View>
       </View>
     );

@@ -105,7 +105,7 @@ const Insulin = ({navigation}) => {
               textAlign: "center",
             }}
           >
-            ARVs
+            Insulin
           </Text>
           <View style={HomeStyles.cartBox}>
             <TouchableOpacity>
