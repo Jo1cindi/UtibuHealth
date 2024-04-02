@@ -7,7 +7,7 @@ import axios from "axios";
 import CategoryStyles from "../Styles/CategoryStyles";
 import { set } from "react-hook-form";
 
-const Arvs = () => {
+const Arvs = ({navigation}) => {
   const category = {
     category: "ARV",
   };
@@ -84,7 +84,7 @@ const Arvs = () => {
       <View style={HomeStyles.container}>
         {/* Header */}
         <View style={HomeStyles.header}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=> navigation.navigate("Home")}>
             <Text
               style={{
                 fontFamily: "DidactGothic",
@@ -162,7 +162,7 @@ const Arvs = () => {
                           ? medicineImages[5].url
                           : medicine.MedicineID === 7
                           ? medicineImages[6].url
-                          : medicine[7].url
+                          : medicineImages[7].url
                       }
                       style={CategoryStyles.medicineImage}
                     />
@@ -175,13 +175,14 @@ const Arvs = () => {
                   >
                     {medicine.Name}
                   </Text>
+                  <Text style={CategoryStyles.desc}>{medicine.Description + "..."}</Text>
                   <View style={CategoryStyles.medicinePrice}>
                     <Text style={{ fontFamily: "DidactGothic" }}>
                       {"KES" + " " + medicine.Price}
                     </Text>
 
                     <TouchableOpacity style={CategoryStyles.bagContainer}>
-                      <Icon name="shopping-bag" size={22}></Icon>
+                      <Icon name="shopping-bag" size={22} color={'#705335'}></Icon>
                     </TouchableOpacity>
                   </View>
                 </View>

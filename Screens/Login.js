@@ -55,11 +55,22 @@ const Login = ({ navigation }) => {
             await AsyncStorage.setItem('userName', response.data.name);
             console.log('Name stored successfully');
           } catch (error) {
-            console.error('Error storing authentication name:', error);
+            const error1 = JSON.parse(error)
+            console.error('Error storing authentication name:', error1);
           }
         }
     }).catch((error)=>{
-      console.log(error)
+      // Handle error
+      if (error.message === 'Network Error') {
+        console.error('Network error occurred. Please check your network connection.');
+      } else if (error.response) {
+        // If the error is related to a server response
+        console.error('Response status code:', error.response.status);
+        console.error('Response data:', error.response.data);
+      } else {
+        // If it's not a network error and there's no server response
+        console.error('Unknown error occurred:', error);
+      }
       setLoginError("Incorrect Email or Password")
     });
   };

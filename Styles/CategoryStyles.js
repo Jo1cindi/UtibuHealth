@@ -32,17 +32,17 @@ const CategoryStyles = StyleSheet.create({
   },
   medicationBox: {
     backgroundColor: "#ddd",
-    height: 200,
+    height: 'auto',
     flex: 1,
     alignSelf: "center",
     justifyContent: "flex-start",
     alignItems: "center",
     margin: 10,
+    borderRadius: 10
   },
   imageBox: {
     width: 100,
     height: 100,
-    // backgroundColor: lightGreen,
     marginTop: 20,
     display: 'flex',
     justifyContent: 'center',
@@ -56,18 +56,19 @@ const CategoryStyles = StyleSheet.create({
   medicineName: {
     fontWeight: "500",
     color: "#705335",
-    fontSize: 18,
+    fontSize: 16,
     marginTop: 10,
+    textAlign: 'center',
+    width: '90%'
   },
   medicinePrice: {
-    width: '90%',
-    height: 40,
-    backgroundColor: 'thistle',
+    width: '80%',
+    height: 50,
     marginTop: 10,
     display: 'flex',
     justifyContent: 'space-between',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   bagContainer:{
     width: 36,
@@ -77,7 +78,13 @@ const CategoryStyles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  desc:{
+    width: '90%',
+    height: 35,
+    textAlign: 'center'
   }
+
 });
 
 export default CategoryStyles;

@@ -7,9 +7,9 @@ import axios from "axios";
 import CategoryStyles from "../Styles/CategoryStyles";
 import { set } from "react-hook-form";
 
-const Antibiotics = () => {
+const Antibiotics = ({navigation}) => {
   const category = {
-    category: "ARV",
+    category: "Antibiotics",
   };
   const [medicines, setMedicines] = useState([]);
   const medicineImages = [
@@ -84,7 +84,7 @@ const Antibiotics = () => {
       <View style={HomeStyles.container}>
         {/* Header */}
         <View style={HomeStyles.header}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=> navigation.navigate("Home")}>
             <Text
               style={{
                 fontFamily: "DidactGothic",
@@ -162,7 +162,7 @@ const Antibiotics = () => {
                           ? medicineImages[5].url
                           : medicine.MedicineID === 7
                           ? medicineImages[6].url
-                          : medicine[7].url
+                          : medicineImages[7].url
                       }
                       style={CategoryStyles.medicineImage}
                     />
@@ -175,6 +175,7 @@ const Antibiotics = () => {
                   >
                     {medicine.Name}
                   </Text>
+                  <Text style={CategoryStyles.desc}>{medicine.Description + "..."}</Text>
                   <View style={CategoryStyles.medicinePrice}>
                     <Text style={{ fontFamily: "DidactGothic" }}>
                       {"KES" + " " + medicine.Price}

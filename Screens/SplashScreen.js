@@ -11,21 +11,20 @@ const SplashScreen = ({ navigation }) => {
   const navigateToScreens = async () => {
   
     //Getting auth token
-    // try {
-    //   const token = await AsyncStorage.getItem('authToken');
-    //   if(token){
-    //     navigation.navigate("Home");
-    //   }else{
-    //     navigation.navigate("CreateAccount");
-    //   }
-    //   console.log(token)
-    //   return token;
-    // } catch (error) {
-    //   console.error('Error retrieving authentication token:', error);
-    //   return null;
-    // }
+    try {
+      const token = await AsyncStorage.getItem('authToken');
+      if(token){
+        navigation.navigate("Home");
+      }else{
+        navigation.navigate("CreateAccount");
+      }
+      console.log(token)
+      return token;
+    } catch (error) {
+      console.error('Error retrieving authentication token:', error);
+      return null;
+    }
 
-    navigation.navigate("CreateAccount");
 
   };
   
