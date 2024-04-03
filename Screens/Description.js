@@ -71,6 +71,24 @@ const Description = ({navigation}) => {
     }
   }
 
+  //Getting Image URL
+  const [imageUrl, setImageUrl] = useState("")
+  const getUrl = async() =>{
+    try {
+      const storedUrl = await AsyncStorage.getItem('imageUrl');
+      if(storedUrl){
+        setImageUrl(storedUrl)
+      }else{
+        console.log("No url found")
+      }
+      // console.log(id)
+      return id;
+    } catch (error) {
+      console.error('Error retrieving ID', error);
+      return null;
+    }
+  }
+
   //Retreiving medicine
   useEffect(() => {
     getDesc();
@@ -164,7 +182,7 @@ const Description = ({navigation}) => {
           </View>
   
           <View style={DescriptionStyles.medicineImage}>
-             {/* <Image source={{uri: imageUrls[storedMedicineID-1].storedUrl}}/> */}
+             <Image source={{uri: medicineDesc.URL}}/>
           </View>
   
           <View style={DescriptionStyles.medicineDetails}>

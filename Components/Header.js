@@ -3,7 +3,7 @@ import React from "react";
 import HomeStyles from "../Styles/HomeStyles";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-const Header = () => {
+const Header = ({navigation}) => {
   return (
     <View style={HomeStyles.topMenu}>
       <View style={HomeStyles.logo}>
@@ -13,7 +13,7 @@ const Header = () => {
         />
       </View>
       <View style={HomeStyles.cartBox}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=> navigation.navigate("Checkout")}>
           <Icon
             name="user"
             size={36}

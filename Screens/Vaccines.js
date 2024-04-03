@@ -9,7 +9,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Vaccines = ({ navigation }) => {
   const category = {
-    category: "Vaccines",
+    category: "Insulin",
   };
   const [medicines, setMedicines] = useState([]);
   const medicineImages = [

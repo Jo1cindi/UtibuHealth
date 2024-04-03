@@ -1,7 +1,6 @@
 import { View, Text, TouchableOpacity, TextInput, Image } from "react-native";
 import React, { useEffect, useState } from "react";
 import HomeStyles from "../Styles/HomeStyles";
-import Icon from "react-native-vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Header from "../Components/Header";
