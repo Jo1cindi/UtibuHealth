@@ -33,22 +33,26 @@ const DescriptionStyles = StyleSheet.create({
   medicineImage: {
     width: "80%",
     height: 400,
-    backgroundColor: "thistle",
     marginTop: 20,
+  },
+  image:{
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain'
   },
   medicineDetails: {
     width: width,
     height: 500,
     backgroundColor: white,
-    borderTopRightRadius: 20, // Adjust the radius value as needed
-    borderBottomLeftRadius: 20,
+    borderTopRightRadius: 60, // Adjust the radius value as needed
+    borderTopLeftRadius: 60,
   },
   medicineName: {
     fontSize: 20,
     color: brown,
     marginLeft: 20,
     marginBottom: 30,
-    marginTop: 20,
+    marginTop: 30,
   },
   medicinePrice: {
     marginLeft: 20,

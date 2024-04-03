@@ -114,7 +114,7 @@ const Antibiotics = ({ navigation }) => {
               textAlign: "center",
             }}
           >
-            ARVs
+            Antibiotics
           </Text>
           <View style={HomeStyles.cartBox}>
             <TouchableOpacity>
@@ -169,7 +169,8 @@ const Antibiotics = ({ navigation }) => {
                   key={medicine.MedicineID}
                 >
                   <View style={CategoryStyles.imageBox}>
-                    <Image source={{uri: medicine.URI}} style={CategoryStyles.medicineImage} />
+                    <Image source={require("../Images/ARVs/8.png")
+                          } style={CategoryStyles.medicineImage} />
                   </View>
                   <Text
                     style={[

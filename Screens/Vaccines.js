@@ -9,49 +9,49 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Vaccines = ({ navigation }) => {
   const category = {
-    category: "Insulin",
+    category: "Vaccines",
   };
   const [medicines, setMedicines] = useState([]);
   const medicineImages = [
     {
       id: 1,
       url: require("../Images/ARVs/1.png"),
-      storedUrl:"../Images/ARVs/1.png" 
+      storedUrl: "../Images/ARVs/1.png",
     },
     {
       id: 2,
       url: require("../Images/ARVs/2.png"),
-      storedUrl:"../Images/ARVs/2.png" 
+      storedUrl: "../Images/ARVs/2.png",
     },
     {
       id: 3,
       url: require("../Images/ARVs/3.png"),
-      storedUrl:"../Images/ARVs/3.png" 
+      storedUrl: "../Images/ARVs/3.png",
     },
     {
       id: 4,
       url: require("../Images/ARVs/4.png"),
-      storedUrl:"../Images/ARVs/4.png" 
+      storedUrl: "../Images/ARVs/4.png",
     },
     {
       id: 5,
       url: require("../Images/ARVs/5.png"),
-      storedUrl:"../Images/ARVs/5.png" 
+      storedUrl: "../Images/ARVs/5.png",
     },
     {
       id: 6,
       url: require("../Images/ARVs/6.png"),
-      storedUrl:"../Images/ARVs/6.png" 
+      storedUrl: "../Images/ARVs/6.png",
     },
     {
       id: 7,
       url: require("../Images/ARVs/7.png"),
-      storedUrl:"../Images/ARVs/7.png" 
+      storedUrl: "../Images/ARVs/7.png",
     },
     {
       id: 8,
       url: require("../Images/ARVs/8.png"),
-      storedUrl:"../Images/ARVs/8.png" 
+      storedUrl: "../Images/ARVs/8.png",
     },
   ];
   const url =
@@ -78,7 +78,6 @@ const Vaccines = ({ navigation }) => {
   };
   useEffect(() => {
     fetchData();
-    // console.log(medicines[0])
   }),
     [fetchData, url];
 
@@ -114,7 +113,7 @@ const Vaccines = ({ navigation }) => {
               textAlign: "center",
             }}
           >
-            ARVs
+            Vaccines
           </Text>
           <View style={HomeStyles.cartBox}>
             <TouchableOpacity>
@@ -166,23 +165,7 @@ const Vaccines = ({ navigation }) => {
                 >
                   <View style={CategoryStyles.imageBox}>
                     <Image
-                      source={
-                        medicine.MedicineID === 1
-                          ? medicineImages[0].url
-                          : medicine.MedicineID === 2
-                          ? medicineImages[1].url
-                          : medicine.MedicineID === 3
-                          ? medicineImages[2].url
-                          : medicine.MedicineID === 5
-                          ? medicineImages[3].url
-                          : medicine.MedicineID === 5
-                          ? medicineImages[4].url
-                          : medicine.MedicineID === 6
-                          ? medicineImages[5].url
-                          : medicine.MedicineID === 7
-                          ? medicineImages[6].url
-                          : medicineImages[7].url
-                      }
+                      source={require("../Images/ARVs/10.png")}
                       style={CategoryStyles.medicineImage}
                     />
                   </View>
