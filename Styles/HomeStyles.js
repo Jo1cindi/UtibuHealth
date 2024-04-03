@@ -56,7 +56,17 @@ const HomeStyles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-end",
+    position: 'relative'
   },
+  count: {
+    position: 'absolute',
+    width: 22,
+    height: 22,
+    backgroundColor: green,
+    borderRadius: 11,
+    left: 70,
+    zIndex: 1
+  }, 
   welcomeBox: {
     width: "90%",
     height: 40,
