@@ -58,14 +58,25 @@ const HomeStyles = StyleSheet.create({
     justifyContent: "flex-end",
     position: 'relative'
   },
+  // icon: {
+  //   position: 'absolute',
+  //   top: 0,
+  //   bottom: 0,
+  //   right: 1000
+  // },
   count: {
     position: 'absolute',
     width: 22,
     height: 22,
     backgroundColor: green,
     borderRadius: 11,
-    left: 70,
-    zIndex: 1
+    left: 0,
+    zIndex: 1,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 99,
+    Bottom: 100
   }, 
   welcomeBox: {
     width: "90%",
@@ -155,8 +166,22 @@ const HomeStyles = StyleSheet.create({
   },
   medicineBox:{
     width: '90%',
-    height: 500,
-    backgroundColor: 'maroon'
+    height: 'auto',
+    backgroundColor: '#ddd',
+    borderRadius: 15,
+    marginBottom: 30
+  },
+  howToTitle:{
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    marginTop: 20,
+    marginLeft: 20
+  },
+  howToText:{
+    fontSize: 18,
+    marginBottom: 5,
+    marginLeft: 20
   }
 });
 
