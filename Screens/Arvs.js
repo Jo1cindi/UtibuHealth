@@ -5,7 +5,6 @@ import { useFonts } from "expo-font";
 import Icon from "react-native-vector-icons/Feather";
 import axios from "axios";
 import CategoryStyles from "../Styles/CategoryStyles";
-import { set } from "react-hook-form";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Arvs = ({ navigation }) => {
@@ -159,15 +158,6 @@ const Arvs = ({ navigation }) => {
                     "medicineID",
                     medicine.MedicineID.toString()
                   );
-                  try {
-                    await AsyncStorage.setItem(
-                      "medicineImages",
-                      JSON.stringify(medicineImages)
-                    );
-                    console.log("Images saved successfully!");
-                  } catch (error) {
-                    console.error("Error saving images:", error);
-                  }
                 }}
               >
                 <View

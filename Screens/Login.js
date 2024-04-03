@@ -58,6 +58,16 @@ const Login = ({ navigation }) => {
             const error1 = JSON.parse(error)
             console.error('Error storing authentication name:', error1);
           }
+
+          //Storing id
+          try {
+            await AsyncStorage.setItem('customerID', response.data.customerID.toString());
+            console.log('ID stored successfully');
+          } catch (error) {
+            const error1 = JSON.parse(error)
+            console.error('Error storing authentication name:', error1);
+          }
+
         }
     }).catch((error)=>{
       // Handle error

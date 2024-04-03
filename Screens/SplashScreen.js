@@ -24,7 +24,8 @@ const SplashScreen = ({ navigation }) => {
       console.error('Error retrieving authentication token:', error);
       return null;
     }
-
+     
+    
 
   };
   
