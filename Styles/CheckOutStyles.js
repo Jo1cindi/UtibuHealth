@@ -28,8 +28,8 @@ const checkoutStyles = StyleSheet.create({
     alignItems: "center",
   },
   checkout: {
-    width: '85%',
-    height: 500,
+    width: '90%',
+    height: 'auto',
     backgroundColor: lightGreen,
     marginTop: 20
   },
@@ -37,7 +37,33 @@ const checkoutStyles = StyleSheet.create({
    width: '100%',
    height: 200,
    backgroundColor: '#ddd',
-   borderRadius: 20
+   borderRadius: 20,
+   marginBottom: 20,
+   display: 'flex',
+   alignItems: 'center',
+  flexDirection: 'row',
+  //  justifyContent: 'center'
+  },
+  itemImage:{
+   width: 100,
+   height: 100,
+   resizeMode: 'contain',
+   marginLeft: 20
+  },
+  ItemDesc: {
+    width: '50%',
+    height: '250',
+    marginLeft: 40
+  },
+  itemName:{
+    color: brown,
+    fontWeight: '500',
+    fontSize: 18
+  },
+  itemDescription: {
+    fontSize: 16,
+    marginTop: 10,
+    fontWeight: 'bold'
   }
 });
 

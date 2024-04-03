@@ -104,7 +104,7 @@ const Arvs = ({ navigation }) => {
               {
                 flexDirection: "row",
                 flexWrap: "wrap",
-              },
+              }
             ]}
           >
             {medicines.map((medicine) => (

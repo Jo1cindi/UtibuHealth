@@ -108,7 +108,7 @@ const Description = ({ navigation }) => {
         console.error("Request failed with error:", error);
       });
 
-      navigation.navigate("Home")
+      // navigation.navigate("Home")
   };
 
   //Fonts

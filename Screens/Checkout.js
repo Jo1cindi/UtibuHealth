@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
 import DescriptionStyles from "../Styles/DescriptionStyles";
 import React, { useEffect, useState } from "react";
 import { useFonts } from "expo-font";
@@ -107,19 +107,43 @@ const Checkout = ({ navigation }) => {
             </TouchableOpacity>
           </View>
 
-          <View style={checkoutStyles.checkout}>
-            {orderItems
-              .filter(
-                (orderItem, index) =>
-                  orderItems.findIndex((item) => item.id === orderItem.id) ===
-                  index
-              )
-              .map((uniqueOrderItem, index) => (
+          <ScrollView
+            contentContainerStyle={[
+              {
+                flexDirection: "row",
+                flexWrap: "wrap",
+              },
+            ]}
+          >
+            <View style={checkoutStyles.checkout} >
+              {orderItems.map((uniqueOrderItem, index) => (
                 <View key={index} style={checkoutStyles.item}>
-                  <Text>{uniqueOrderItem.Quantity}</Text>
+                  <View style={checkoutStyles.itemImage}>
+                    <Image
+                      source={
+                        uniqueOrderItem.Category === "ARVs"
+                          ? require("../Images/ARVs/2.png")
+                          : uniqueOrderItem.Category === "Insulin"
+                          ? require("../Images/ARVs/12.png")
+                          : uniqueOrderItem.Category === "Antibiotics"
+                          ? require("../Images/ARVs/8.png")
+                          : require("../Images/ARVs/10.png")
+                      }
+                      style={checkoutStyles.itemImage}
+                    ></Image>
+                  </View>
+
+                  <View style={checkoutStyles.ItemDesc}>
+                    <Text style={[{fontFamily: "Arimo"}, checkoutStyles.itemName]}>{uniqueOrderItem.Name}</Text>
+                    <Text style={[{fontFamily: "DidactGothic"}, checkoutStyles.itemDescription]}>{'KES' + " " +uniqueOrderItem.Price}</Text>
+                  </View>
                 </View>
               ))}
-          </View>
+            </View>
+            <TouchableOpacity style={[DescriptionStyles.addToCart,{marginBottom: 20}]}>
+              <Text style={{color: '#eee', fontSize: 16}}>Checkout</Text>
+            </TouchableOpacity>
+          </ScrollView>
         </View>
       </ScrollView>
     );
