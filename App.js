@@ -11,6 +11,7 @@ import Arvs from "./Screens/Arvs";
 import Vaccines from "./Screens/Vaccines";
 import Insulin from "./Screens/Insulin";
 import Antibiotics from "./Screens/Antibiotics";
+import Description from "./Screens/Description";
 
 
 const Stack = createNativeStackNavigator();
@@ -30,6 +31,7 @@ const App = () => {
         <Stack.Screen name="Vaccines" component={Vaccines} options={{headerShown: false}}/>
         <Stack.Screen name="Insulin" component={Insulin} options={{headerShown: false}}/>
         <Stack.Screen name="Antibiotics" component={Antibiotics} options={{headerShown: false}}/>
+        <Stack.Screen name="Description" component={Description} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
