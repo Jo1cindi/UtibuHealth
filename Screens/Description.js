@@ -166,7 +166,7 @@ const Description = ({ navigation }) => {
           <View style={DescriptionStyles.medicineImage}>
             <Image
               source={
-                medicineDesc.Category === "ARVs"
+                medicineDesc.Category === "ARV"
                   ? require("../Images/ARVs/2.png")
                   : medicineDesc.Category === "Insulin"
                   ? require("../Images/ARVs/12.png")
