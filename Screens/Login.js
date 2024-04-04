@@ -68,6 +68,8 @@ const Login = ({ navigation }) => {
             console.error('Error storing authentication name:', error1);
           }
 
+        }else if(response.status === 401){
+          setLoginError("Incorrect Email or Password")
         }
     }).catch((error)=>{
       // Handle error
@@ -77,11 +79,10 @@ const Login = ({ navigation }) => {
         // If the error is related to a server response
         console.error('Response status code:', error.response.status);
         console.error('Response data:', error.response.data);
-      } else {
+      } else{
         // If it's not a network error and there's no server response
         console.error('Unknown error occurred:', error);
       }
-      setLoginError("Incorrect Email or Password")
     });
   };
 
