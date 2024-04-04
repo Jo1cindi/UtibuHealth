@@ -59,9 +59,18 @@ const Checkout = ({ navigation }) => {
     useEffect(() => {
       getUserID();
       getItems();
+      // console.log(subTotal)
       // console.log(orderItems[0].MedicineID)
     }, [getUserID, getItems]);
 
+    
+   
+
+    //Order summary
+    const subTotal = orderItems.reduce((total, item) => total + item.Price, 0)
+    const vat = 0.16 * subTotal;
+    const shipping = subTotal === 0 ? 0 : 1000;
+    const total = subTotal === 0 ? 0 : 1000 + vat + subTotal;
     return (
       <ScrollView
         contentContainerStyle={[
@@ -115,7 +124,7 @@ const Checkout = ({ navigation }) => {
               },
             ]}
           >
-            <View style={checkoutStyles.checkout} >
+            <View style={checkoutStyles.checkout}>
               {orderItems.map((uniqueOrderItem, index) => (
                 <View key={index} style={checkoutStyles.item}>
                   <View style={checkoutStyles.itemImage}>
@@ -134,16 +143,88 @@ const Checkout = ({ navigation }) => {
                   </View>
 
                   <View style={checkoutStyles.ItemDesc}>
-                    <Text style={[{fontFamily: "Arimo"}, checkoutStyles.itemName]}>{uniqueOrderItem.Name}</Text>
-                    <Text style={[{fontFamily: "DidactGothic"}, checkoutStyles.itemDescription]}>{'KES' + " " +uniqueOrderItem.Price}</Text>
+                    <Text
+                      style={[{ fontFamily: "Arimo" }, checkoutStyles.itemName]}
+                    >
+                      {uniqueOrderItem.Name}
+                    </Text>
+                    <Text
+                      style={[
+                        { fontFamily: "DidactGothic" },
+                        checkoutStyles.itemDescription,
+                      ]}
+                    >
+                      {"KES" + " " + uniqueOrderItem.Price}
+                    </Text>
+                    <View style={checkoutStyles.updateItem}>
+                      <TouchableOpacity
+                        style={checkoutStyles.subtract}
+                      >
+                        <Text
+                          style={{ fontFamily: "DidactGothic", fontSize: 20 }}
+                        >
+                          -
+                        </Text>
+                      </TouchableOpacity>
+                      <Text>{uniqueOrderItem.Quantity}</Text>
+                      <TouchableOpacity style={checkoutStyles.subtract}>
+                        <Text
+                          style={{ fontFamily: "DidactGothic", fontSize: 20 }}
+                        >
+                          +
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
                   </View>
                 </View>
               ))}
+
+              <View style={checkoutStyles.total}>
+                <View style={checkoutStyles.subtotal}>
+                  <View style={checkoutStyles.text}>
+                    <Text style={{ fontFamily: "Arimo", fontSize: 18 }}>
+                      {"Subtotal"}
+                    </Text>
+                  </View>
+                  <View>
+                    <Text
+                      style={{
+                        fontFamily: "Arimo",
+                        fontSize: 16,
+                      }}
+                    >
+                       { "KES" + " " + subTotal}
+                    </Text>
+                  </View>
+                </View>
+                <View style={checkoutStyles.vat}>
+                  <View >
+                    <Text style={{ fontFamily: "Arimo", fontSize: 16 }}>{"VAT (16%)"}</Text>
+                  </View>
+                  <View>
+                    <Text style={{ fontFamily: "Arimo", fontSize: 16 }}>{ "KES"+ " " +vat}</Text>
+                  </View>
+                </View>
+                
+                <View style={checkoutStyles.totalAmount}>
+                  <View style={checkoutStyles.totalText}>
+                    <Text style={{ fontFamily: "Arimo", fontSize: 18 }}>{"Total"}</Text>
+                  </View>
+                  <View style={checkoutStyles.totalValue}>
+                    <Text style={{ fontFamily: "Arimo", fontSize: 18, fontWeight: 'bold' }}>{"KES" + " " + total}</Text>
+                  </View>
+                </View>
+                
+              {/* </View> */}
+              </View>
             </View>
-            <TouchableOpacity style={[DescriptionStyles.addToCart,{marginBottom: 20}]}>
-              <Text style={{color: '#eee', fontSize: 16}}>Checkout</Text>
-            </TouchableOpacity>
+            <TouchableOpacity
+                  style={[DescriptionStyles.addToCart, { marginBottom: 20 }]}
+                >
+                  <Text style={{ color: "#eee", fontSize: 16 }}>Checkout</Text>
+                </TouchableOpacity>
           </ScrollView>
+          
         </View>
       </ScrollView>
     );

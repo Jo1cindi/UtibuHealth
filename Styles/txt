@@ -1,0 +1,46 @@
+<View style={{ flex: 1 }}>
+              {/* Subtotal */}
+              <View style={checkoutStyles.total}>
+                <View style={checkoutStyles.subtotal}>
+                  <View style={checkoutStyles.text}>
+                    <Text style={{ fontFamily: "Arimo", fontSize: 18 }}>
+                      {"Subtotal"}
+                    </Text>
+                  </View>
+                  <View style={checkoutStyles.value}>
+                    <Text
+                      style={{
+                        fontFamily: "Arimo",
+                        fontSize: 16,
+                        marginLeft: "15%",
+                      }}
+                    >
+                       { "KES" + " " + subTotal}
+                    </Text>
+                  </View>
+                </View>
+                <View style={checkoutStyles.vat}>
+                  <View style={checkoutStyles.text}>
+                    <Text>{"VAT (16%)"}</Text>
+                  </View>
+                  <View style={checkoutStyles.value}>
+                    <Text>{ "KES"+ " " +vat}</Text>
+                  </View>
+                </View>
+                
+                <View style={checkoutStyles.totalAmount}>
+                  <View style={checkoutStyles.totalText}>
+                    <Text>{"Total"}</Text>
+                  </View>
+                  <View style={checkoutStyles.totalValue}>
+                    <Text>{"KES" + " " + total}</Text>
+                  </View>
+                </View>
+                <TouchableOpacity
+                  style={[DescriptionStyles.addToCart, { marginBottom: 20 }]}
+                >
+                  <Text style={{ color: "#eee", fontSize: 16 }}>Checkout</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            
